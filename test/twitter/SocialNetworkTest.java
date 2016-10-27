@@ -2,6 +2,7 @@ package twitter;
 
 import static org.junit.Assert.*;
 
+import java.time.Instant;
 import java.util.*;
 
 import org.junit.Test;
@@ -12,7 +13,10 @@ public class SocialNetworkTest {
      * TODO: your testing strategies for these methods should go here.
      * Make sure you have partitions.
      */
-    
+
+    private static final Tweet tweet1 = new Tweet(1, "Charles", "1@Andy,a@Lisa,", Instant.now());
+    private static final Tweet tweet2 = new Tweet(2, "Owen", "1@123,a@abc,", Instant.now());
+
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
         assert false; // make sure assertions are enabled with VM argument: -ea
@@ -24,7 +28,12 @@ public class SocialNetworkTest {
         
         assertTrue("expected empty graph", followsGraph.isEmpty());
     }
-    
+
+    @Test
+    public void testGuessFollowsGraphSomeTweets() {
+
+    }
+
     @Test
     public void testInfluencersEmpty() {
         Map<String, Set<String>> followsGraph = new HashMap<>();

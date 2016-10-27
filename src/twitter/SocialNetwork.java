@@ -86,6 +86,13 @@ public class SocialNetwork {
         return influencer;
     }
 
+    /**
+     * take in an unsorted map, sort entries by value in ascending order, return sorted map
+     * @param unsortMap unsorted map
+     * @param <K> key
+     * @param <V> value
+     * @return sorted map
+     */
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> unsortMap) {
 
         List<Map.Entry<K, V>> list =
