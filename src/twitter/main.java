@@ -16,6 +16,8 @@ public class main {
             System.out.println(s);
         }
 
+        System.out.println((new HashSet<>(Arrays.asList("a", "b"))).getClass());
+
 //        boolean startRecording = false;
 //        String sub = "";
 //        Set<String> subSet = new HashSet<>();

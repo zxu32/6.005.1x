@@ -1,5 +1,6 @@
 package twitter;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 import java.time.Instant;
@@ -15,7 +16,7 @@ public class SocialNetworkTest {
      */
 
     private static final Tweet tweet1 = new Tweet(1, "Charles", "1@Andy,a@Lisa,", Instant.now());
-    private static final Tweet tweet2 = new Tweet(2, "Owen", "1@123,a@abc,", Instant.now());
+    private static final Tweet tweet2 = new Tweet(2, "Owen", "1@Stephy,a@Fiora,", Instant.now());
 
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
@@ -31,7 +32,17 @@ public class SocialNetworkTest {
 
     @Test
     public void testGuessFollowsGraphSomeTweets() {
+        List<Tweet> tweets = new ArrayList<>();
+        tweets.add(tweet1);
+        tweets.add(tweet2);
+        Map<String, Set<String>> followsGraph = SocialNetwork.guessFollowsGraph(tweets);
+        Map<String, Set<String>> answer = new HashMap<>();
 
+        answer.put("Charles", new HashSet<>(Arrays.asList("Andy", "Lisa")));
+        answer.put("Owen", new HashSet<>(Arrays.asList("Stephy", "Fiora")));
+
+        assertFalse("expected non-empty map", followsGraph.isEmpty());
+        assertThat("check map equals answer", followsGraph, is(answer));
     }
 
     @Test
@@ -55,7 +66,7 @@ public class SocialNetworkTest {
         List<String> influencers = SocialNetwork.influencers(followsGraph);
 
         assertFalse("expected non-empty list", influencers.isEmpty());
-        assertTrue("expected list to contain tweets", influencers.containsAll(Arrays.asList("c", "a", "b")));
+        assertTrue("expected list to contain username", influencers.containsAll(Arrays.asList("c", "a", "b")));
     }
 
 
