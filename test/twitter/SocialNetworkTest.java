@@ -2,11 +2,7 @@ package twitter;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.Test;
 
@@ -36,6 +32,23 @@ public class SocialNetworkTest {
         
         assertTrue("expected empty list", influencers.isEmpty());
     }
+
+    @Test
+    public void testInfluencersSomeInfluencers() throws Exception {
+        Map<String, Set<String>> followsGraph = new HashMap<>();
+        Set<String> s1 = new HashSet<>(Arrays.asList("a", "c"));
+        Set<String> s2 = new HashSet<>(Arrays.asList("b", "c"));
+        Set<String> s3 = new HashSet<>(Arrays.asList("a", "c"));
+        followsGraph.put("a", s1);
+        followsGraph.put("b", s2);
+        followsGraph.put("c", s3);
+
+        List<String> influencers = SocialNetwork.influencers(followsGraph);
+
+        assertFalse("expected non-empty list", influencers.isEmpty());
+        assertTrue("expected list to contain tweets", influencers.containsAll(Arrays.asList("c", "a", "b")));
+    }
+
 
     /*
      * Warning: all the tests you write here must be runnable against any

@@ -1,8 +1,6 @@
 package twitter;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * SocialNetwork provides methods that operate on a social network.
@@ -38,7 +36,14 @@ public class SocialNetwork {
      *         either authors or @-mentions in the list of tweets.
      */
     public static Map<String, Set<String>> guessFollowsGraph(List<Tweet> tweets) {
-        throw new RuntimeException("not implemented");
+        Map<String, Set<String>> followsGraph = new HashMap<>();
+        for (Tweet tweet: tweets) {
+            List<Tweet> singleTweet = new ArrayList<>();
+            singleTweet.add(tweet);
+            Set<String> followed = new HashSet<>(Extract.getMentionedUsers(singleTweet));
+            followsGraph.put(tweet.getAuthor(), followed);
+        }
+        return followsGraph;
     }
 
     /**
@@ -51,7 +56,10 @@ public class SocialNetwork {
      *         descending order of follower count.
      */
     public static List<String> influencers(Map<String, Set<String>> followsGraph) {
-        throw new RuntimeException("not implemented");
+        Map<String, Set<String>> followsGrpahCopy = new HashMap<>(followsGraph);
+        followsGrpahCopy.forEach((k, v)-> {
+
+        });
     }
 
     /* Copyright (c) 2007-2016 MIT 6.005 course staff, all rights reserved.
