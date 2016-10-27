@@ -56,10 +56,52 @@ public class SocialNetwork {
      *         descending order of follower count.
      */
     public static List<String> influencers(Map<String, Set<String>> followsGraph) {
-        Map<String, Set<String>> followsGrpahCopy = new HashMap<>(followsGraph);
-        followsGrpahCopy.forEach((k, v)-> {
+        //create a dictionary as <username, username count>
+        Map<String, Integer> influencerMap = new HashMap<>();
+        //iterate through followerGraph
+        for (Map.Entry<String, Set<String>> entry : followsGraph.entrySet()) {
+            //add key to dictionary if it's not already added
+            if (!influencerMap.containsKey(entry.getKey())) {
+                influencerMap.put(entry.getKey(), 0);
+            } else {
+                //else increase the value of that key by 1
+                influencerMap.put(entry.getKey(), influencerMap.get(entry.getKey()) + 1);
+            }
+            //iterate through followerGraph value set
+            for (String username: followsGraph.get(entry.getKey())) {
+                //if it's not already added, add each item in the set to dictionary
+                if (!influencerMap.containsKey(username)) {
+                    influencerMap.put(username, 0);
+                } else {
+                    //else increase the value of that key by 1
+                    influencerMap.put(username, influencerMap.get(username) + 1);
+                }
+            }
+        }
+        //create a map to contain sorted map
+        Map<String, Integer> sortedInfluencerMap = sortByValue(influencerMap);
+        List<String> influencer = new ArrayList<String>(sortedInfluencerMap.keySet());
 
+        //return keys of sorted dictionary as list
+        return influencer;
+    }
+
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> unsortMap) {
+
+        List<Map.Entry<K, V>> list =
+                new LinkedList<Map.Entry<K, V>>(unsortMap.entrySet());
+
+        Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
+            public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2) {
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
         });
+
+        Map<K, V> result = new LinkedHashMap<K, V>();
+        for (Map.Entry<K, V> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
     }
 
     /* Copyright (c) 2007-2016 MIT 6.005 course staff, all rights reserved.
