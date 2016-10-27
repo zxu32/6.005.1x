@@ -39,8 +39,6 @@ public class SocialNetwork {
         Map<String, Set<String>> followsGraph = new HashMap<>();
         for (Tweet tweet: tweets) {
             //put tweet into a list because getMentionedUsers function takes list as param
-//            List<Tweet> singleTweet = new ArrayList<>();
-//            singleTweet.add(tweet);
             Set<String> followed = new HashSet<>(Extract.getMentionedUsers(Arrays.asList(tweet)));
             followsGraph.put(tweet.getAuthor(), followed);
         }

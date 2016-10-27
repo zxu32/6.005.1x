@@ -15,8 +15,8 @@ public class SocialNetworkTest {
      * Make sure you have partitions.
      */
 
-    private static final Tweet tweet1 = new Tweet(1, "Charles", "1@Andy,a@Lisa,", Instant.now());
-    private static final Tweet tweet2 = new Tweet(2, "Owen", "1@Stephy,a@Fiora,", Instant.now());
+    private static final Tweet tweet1 = new Tweet(1, "Charles", "@Andy,@Lisa,", Instant.now());
+    private static final Tweet tweet2 = new Tweet(2, "Owen", "@Stephy,@Fiora,", Instant.now());
 
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
@@ -38,8 +38,8 @@ public class SocialNetworkTest {
         Map<String, Set<String>> followsGraph = SocialNetwork.guessFollowsGraph(tweets);
         Map<String, Set<String>> answer = new HashMap<>();
 
-        answer.put("Charles", new HashSet<>(Arrays.asList("Andy", "Lisa")));
-        answer.put("Owen", new HashSet<>(Arrays.asList("Stephy", "Fiora")));
+        answer.put("Charles", new HashSet<>(Arrays.asList("andy", "lisa")));
+        answer.put("Owen", new HashSet<>(Arrays.asList("stephy", "fiora")));
 
         assertFalse("expected non-empty map", followsGraph.isEmpty());
         assertThat("check map equals answer", followsGraph, is(answer));
