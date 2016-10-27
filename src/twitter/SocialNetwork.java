@@ -80,7 +80,7 @@ public class SocialNetwork {
         }
         //create a map to contain sorted map
         Map<String, Integer> sortedInfluencerMap = sortByValue(influencerMap);
-        List<String> influencer = new ArrayList<String>(sortedInfluencerMap.keySet());
+        List<String> influencer = new ArrayList<>(sortedInfluencerMap.keySet());
 
         //return keys of sorted dictionary as list
         return influencer;
