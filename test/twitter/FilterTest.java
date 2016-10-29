@@ -23,8 +23,8 @@ public class FilterTest {
     private static final Instant d5 = Instant.parse("2016-02-17T12:00:00Z");
     private static final Instant d6 = Instant.parse("2016-02-17T13:00:00Z");
 
-    private static final Tweet tweet1 = new Tweet(1, "alyssa", "is it reasonable to talk about rivest so much?", d1);
-    private static final Tweet tweet2 = new Tweet(2, "bbitdiddle", "rivest talk in 30 minutes #hype", d2);
+    private static Tweet tweet1 = new Tweet(1, "alyssa", "is it reasonable to talk about rivest so much?", d1);
+    private static Tweet tweet2 = new Tweet(2, "bbitdiddle", "rivest talk in 30 minutes #hype", d2);
     private static final Tweet tweet3 = new Tweet(3, "bbitdiddle", "talk in 30 minutes #hype", d3);
     private static final Tweet tweet4 = new Tweet(4, "bbitdiddle", "rivest talk", d4);
     private static final Tweet tweet5 = new Tweet(5, "bbitdiddle", "rivesttalkin 30 minutes #hype", d5);
@@ -47,6 +47,15 @@ public class FilterTest {
     public void testWrittenByEmptyTweetList() {
         List<Tweet> writtenBy = Filter.writtenBy(Arrays.asList(), "alyssa2");
         assertTrue("expected empty set", writtenBy.isEmpty());
+    }
+
+    @Test
+    public void testWrittenByNoModificationToInput() {
+        List<Tweet> writtenBy = Filter.writtenBy(Arrays.asList(tweet1, tweet2), "alyssa");
+
+        assertEquals(new Tweet(1, "alyssa", "is it reasonable to talk about rivest so much?", d1), tweet1);
+        assertEquals(new Tweet(2, "bbitdiddle", "rivest talk in 30 minutes #hype", d2), tweet2);
+
     }
 
     @Test
@@ -92,9 +101,22 @@ public class FilterTest {
     }
 
     @Test
+    public void testContainingNoModificationInput() {
+        List<Tweet> containing = Filter.writtenBy(Arrays.asList(tweet1), "alyssa");
+        assertEquals(new Tweet(1, "alyssa", "is it reasonable to talk about rivest so much?", d1), tweet1);
+
+    }
+
+    @Test
     public void testContainingEmptyTweetList(){
         List<Tweet> containing = Filter.writtenBy(Arrays.asList(), "alyssa2");
         assertTrue("expected empty set", containing.isEmpty());
+    }
+
+    @Test
+    public void testContainingSomeTweets() {
+        List<Tweet> containing = Filter.writtenBy(Arrays.asList(tweet1), "alyssa");
+        assertTrue("expected list to contain tweets", containing.containsAll(Arrays.asList(tweet1)));
     }
 
     @Test
