@@ -10,6 +10,7 @@ import org.junit.Test;
 
 public class SocialNetworkTest {
 
+
     /*
      * TODO: your testing strategies for these methods should go here.
      * Make sure you have partitions.
@@ -17,6 +18,8 @@ public class SocialNetworkTest {
 
     private static final Tweet tweet1 = new Tweet(1, "Charles", "@Andy,@Lisa,", Instant.now());
     private static final Tweet tweet2 = new Tweet(2, "Owen", "@Stephy,@Fiora,", Instant.now());
+    private static final Tweet tweet3 = new Tweet(3, "Jane", "@Shelley, @Stephy, @Fiora", Instant.now());
+
 
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
@@ -32,14 +35,26 @@ public class SocialNetworkTest {
 
     @Test
     public void testGuessFollowsGraphSomeTweets() {
-        List<Tweet> tweets = new ArrayList<>();
-        tweets.add(tweet1);
-        tweets.add(tweet2);
+        List<Tweet> tweets = new ArrayList<>(Arrays.asList(tweet1, tweet2));
         Map<String, Set<String>> followsGraph = SocialNetwork.guessFollowsGraph(tweets);
         Map<String, Set<String>> answer = new HashMap<>();
 
         answer.put("Charles", new HashSet<>(Arrays.asList("andy", "lisa")));
         answer.put("Owen", new HashSet<>(Arrays.asList("stephy", "fiora")));
+
+        assertFalse("expected non-empty map", followsGraph.isEmpty());
+        assertThat("check map equals answer", followsGraph, is(answer));
+    }
+
+    @Test
+    public void testGuessFollowsGraphSomeTweets2() {
+        List<Tweet> tweets = new ArrayList<>(Arrays.asList(tweet1, tweet2, tweet3));
+        Map<String, Set<String>> followsGraph = SocialNetwork.guessFollowsGraph(tweets);
+        Map<String, Set<String>> answer = new HashMap<>();
+
+        answer.put("Charles", new HashSet<>(Arrays.asList("andy", "lisa")));
+        answer.put("Owen", new HashSet<>(Arrays.asList("stephy", "fiora")));
+        answer.put("Jane", new HashSet<>(Arrays.asList("shelley", "stephy", "fiora")));
 
         assertFalse("expected non-empty map", followsGraph.isEmpty());
         assertThat("check map equals answer", followsGraph, is(answer));
@@ -54,21 +69,36 @@ public class SocialNetworkTest {
     }
 
     @Test
-    public void testInfluencersSomeInfluencers() throws Exception {
+    public void testInfluencersSomeInfluencers() {
         Map<String, Set<String>> followsGraph = new HashMap<>();
-        Set<String> s1 = new HashSet<>(Arrays.asList("a", "c"));
-        Set<String> s2 = new HashSet<>(Arrays.asList("b", "c"));
-        Set<String> s3 = new HashSet<>(Arrays.asList("a", "c"));
-        followsGraph.put("a", s1);
-        followsGraph.put("b", s2);
-        followsGraph.put("c", s3);
+
+        followsGraph.put("a", new HashSet<>(Arrays.asList("a", "c")));
+        followsGraph.put("b", new HashSet<>(Arrays.asList("b", "c")));
+        followsGraph.put("c", new HashSet<>(Arrays.asList("a", "c")));
 
         List<String> influencers = SocialNetwork.influencers(followsGraph);
 
         assertFalse("expected non-empty list", influencers.isEmpty());
-        assertTrue("expected list to contain username", influencers.containsAll(Arrays.asList("c", "a", "b")));
+        assertTrue("expected list to contain username",
+                influencers.containsAll(Arrays.asList("c", "a", "b")));
     }
 
+    @Test
+    public void testInfluencersSomeInfluencers2() {
+        Map<String, Set<String>> followsGraph = new HashMap<>();
+
+        followsGraph.put("a", new HashSet<>(Arrays.asList("a", "c")));
+        followsGraph.put("b", new HashSet<>(Arrays.asList("b", "c")));
+        followsGraph.put("c", new HashSet<>(Arrays.asList("a", "c")));
+        followsGraph.put("d", new HashSet<>(Arrays.asList("a", "c", "e")));
+
+
+        List<String> influencers = SocialNetwork.influencers(followsGraph);
+
+        assertFalse("expected non-empty list", influencers.isEmpty());
+        assertTrue("expected list to contain username",
+                influencers.containsAll(Arrays.asList("c", "a", "b", "e")));
+    }
 
     /*
      * Warning: all the tests you write here must be runnable against any
