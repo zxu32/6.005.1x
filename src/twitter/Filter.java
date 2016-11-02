@@ -48,7 +48,7 @@ public class Filter {
     public static List<Tweet> inTimespan(List<Tweet> tweets, Timespan timespan) {
         List<Tweet> tweetInTimespan = new ArrayList<>();
         for (Tweet tweet: tweets) {
-            if (tweet.getTimestamp().isAfter(timespan.getStart()) && tweet.getTimestamp().isBefore(timespan.getEnd())) {
+            if (tweet.getTimestamp().isAfter(timespan.getStart()) && tweet.getTimestamp().isBefore(timespan.getEnd()) || tweet.getTimestamp().equals(timespan.getStart()) || tweet.getTimestamp().equals(timespan.getEnd())) {
                 tweetInTimespan.add(tweet);
             }
         }

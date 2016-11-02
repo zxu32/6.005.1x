@@ -62,9 +62,10 @@ public class Extract {
         String username = "";
         boolean usernameMention = false;
 
-        if (tweets.isEmpty()) {
-            return nameMentioned;
-        }
+//        if (tweets.isEmpty()) {
+//            return nameMentioned;
+//        }
+
         for(Tweet tw : tweets) {
             String text = tw.getText();
             for (int i = 0; i < text.length(); i++) {
