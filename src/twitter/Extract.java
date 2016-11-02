@@ -23,6 +23,9 @@ public class Extract {
      *         every tweet in the list.
      */
     public static Timespan getTimespan(List<Tweet> tweets) {
+        if (tweets.isEmpty()) {
+            return new Timespan(Instant.now(), Instant.now());
+        }
         Instant start = tweets.get(0).getTimestamp();
         Instant end = tweets.get(0).getTimestamp();
         for(Tweet tweet : tweets) {
@@ -58,6 +61,10 @@ public class Extract {
         Set<String> nameMentioned = new HashSet<>();
         String username = "";
         boolean usernameMention = false;
+
+        if (tweets.isEmpty()) {
+            return nameMentioned;
+        }
         for(Tweet tw : tweets) {
             String text = tw.getText();
             for (int i = 0; i < text.length(); i++) {
