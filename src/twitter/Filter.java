@@ -28,7 +28,7 @@ public class Filter {
     public static List<Tweet> writtenBy(List<Tweet> tweets, String username) {
         List<Tweet> filteredByName = new ArrayList<>();
         for (Tweet tweet: tweets) {
-            if (tweet.getAuthor().equals(username)) {
+            if (tweet.getAuthor().toLowerCase().equals(username.toLowerCase())) {
                 filteredByName.add(tweet);
             }
          }

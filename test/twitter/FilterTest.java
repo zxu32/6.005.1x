@@ -87,7 +87,7 @@ public class FilterTest {
         List<Tweet> inTimespan = Filter.inTimespan(Arrays.asList(tweet1, tweet2, tweet3, tweet4, tweet5, tweet6), new Timespan(testStart, testEnd));
 
         assertFalse("expected non-empty list", inTimespan.isEmpty());
-        assertTrue("expected list to contain tweets", inTimespan.containsAll(Arrays.asList(tweet1, tweet2)));
+        assertTrue("expected list to contain tweets", inTimespan.containsAll(Arrays.asList(tweet1, tweet2, tweet4, tweet5)));
         assertEquals("expected same order", 0, inTimespan.indexOf(tweet1));
     }
 
