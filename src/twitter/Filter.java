@@ -74,8 +74,9 @@ public class Filter {
         List<Tweet> containingWords = new ArrayList<>();
         for (Tweet tweet: tweets) {
             String[] splitedText = tweet.getText().toLowerCase().split("\\b");
+            String[] excludedWords = {"and", "not", "or"};
             for (String word: words) {
-                if (Arrays.asList(splitedText).contains(word)) {
+                if (Arrays.asList(splitedText).contains(word) && !Arrays.asList(excludedWords).contains(word)) {
                     containingWords.add(tweet);
                 }
             }
