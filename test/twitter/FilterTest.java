@@ -23,8 +23,8 @@ public class FilterTest {
     private static final Instant d5 = Instant.parse("2016-02-17T12:00:00Z");
     private static final Instant d6 = Instant.parse("2016-02-17T13:00:00Z");
 
-    private static Tweet tweet1 = new Tweet(1, "alyssa", "is it reasonable to talk about rivest so much?", d1);
-    private static Tweet tweet2 = new Tweet(2, "bbitdiddle", "rivest talk in 30 minutes #hype", d2);
+    private static Tweet tweet1 = new Tweet(1, "alyssa", "and is it reasonable to talk about rivest so much?", d1);
+    private static Tweet tweet2 = new Tweet(2, "bbitdiddle", "or rivest talk in 30 minutes #hype", d2);
     private static final Tweet tweet3 = new Tweet(3, "bbitdiddle", "talk in 30 minutes #hype", d3);
     private static final Tweet tweet4 = new Tweet(4, "bbitdiddle", "rivest talk", d4);
     private static final Tweet tweet5 = new Tweet(5, "bbitdiddle", "rivesttalkin 30 minutes #hype", d5);
@@ -101,10 +101,27 @@ public class FilterTest {
     }
 
     @Test
+    public void testContainingAndNotOr() {
+        List<Tweet> containing = Filter.containing(Arrays.asList(tweet1, tweet2), Arrays.asList("talk", "or"));
+
+        assertFalse("expected non-empty list", containing.isEmpty());
+        assertTrue("expected list to contain tweets", containing.containsAll(Arrays.asList(tweet1, tweet2)));
+        assertEquals("expected same order", 0, containing.indexOf(tweet1));
+    }
+
+    @Test
+    public void testContainingSubStringMatch() {
+        List<Tweet> containing = Filter.containing(Arrays.asList(tweet1, tweet2, tweet5), Arrays.asList("talk", "or"));
+
+        assertFalse("expected non-empty list", containing.isEmpty());
+        assertTrue("expected list to contain tweets", containing.containsAll(Arrays.asList(tweet1, tweet2)));
+        assertEquals("expected same order", 0, containing.indexOf(tweet1));
+    }
+
+    @Test
     public void testContainingNoModificationInput() {
         List<Tweet> containing = Filter.writtenBy(Arrays.asList(tweet1), "alyssa");
         assertEquals(new Tweet(1, "alyssa", "is it reasonable to talk about rivest so much?", d1), tweet1);
-
     }
 
     @Test
