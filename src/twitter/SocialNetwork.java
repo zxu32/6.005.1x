@@ -40,7 +40,7 @@ public class SocialNetwork {
         for (Tweet tweet: tweets) {
             //put tweet into a list because getMentionedUsers function takes list as param
             Set<String> followed = new HashSet<>(Extract.getMentionedUsers(Arrays.asList(tweet)));
-            followsGraph.put(tweet.getAuthor().toUpperCase(), followed);
+            followsGraph.put(tweet.getAuthor().toLowerCase(), followed);
         }
         return followsGraph;
     }
@@ -79,10 +79,9 @@ public class SocialNetwork {
         }
         //create a map to contain sorted map
         Map<String, Integer> sortedInfluencerMap = sortByValue(influencerMap);
-        List<String> influencer = new ArrayList<>(sortedInfluencerMap.keySet());
 
         //return keys of sorted dictionary as list
-        return influencer;
+        return new ArrayList<>(sortedInfluencerMap.keySet());
     }
 
     /**

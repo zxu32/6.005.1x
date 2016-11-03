@@ -39,8 +39,8 @@ public class SocialNetworkTest {
         Map<String, Set<String>> followsGraph = SocialNetwork.guessFollowsGraph(tweets);
         Map<String, Set<String>> answer = new HashMap<>();
 
-        answer.put("CHARLES", new HashSet<>(Arrays.asList("andy", "lisa")));
-        answer.put("OWEN", new HashSet<>(Arrays.asList("stephy", "fiora")));
+        answer.put("charles", new HashSet<>(Arrays.asList("andy", "lisa")));
+        answer.put("owen", new HashSet<>(Arrays.asList("stephy", "fiora")));
 
         assertFalse("expected non-empty map", followsGraph.isEmpty());
         assertThat("check map equals answer", followsGraph, is(answer));
@@ -52,9 +52,9 @@ public class SocialNetworkTest {
         Map<String, Set<String>> followsGraph = SocialNetwork.guessFollowsGraph(tweets);
         Map<String, Set<String>> answer = new HashMap<>();
 
-        answer.put("CHARLES", new HashSet<>(Arrays.asList("andy", "lisa")));
-        answer.put("OWEN", new HashSet<>(Arrays.asList("stephy", "fiora")));
-        answer.put("JANE", new HashSet<>(Arrays.asList("shelley", "stephy", "fiora")));
+        answer.put("charles", new HashSet<>(Arrays.asList("andy", "lisa")));
+        answer.put("owen", new HashSet<>(Arrays.asList("stephy", "fiora")));
+        answer.put("jane", new HashSet<>(Arrays.asList("shelley", "stephy", "fiora")));
 
         assertFalse("expected non-empty map", followsGraph.isEmpty());
         assertThat("check map equals answer", followsGraph, is(answer));
@@ -78,6 +78,7 @@ public class SocialNetworkTest {
 
         List<String> influencers = SocialNetwork.influencers(followsGraph);
 
+        assertFalse("must be case insensitive", influencers.contains("C"));
         assertFalse("expected non-empty list", influencers.isEmpty());
         assertTrue("expected list to contain username",
                 influencers.containsAll(Arrays.asList("c", "a", "b")));
@@ -95,6 +96,7 @@ public class SocialNetworkTest {
 
         List<String> influencers = SocialNetwork.influencers(followsGraph);
 
+        assertFalse("no prune empty", !influencers.contains("d"));
         assertFalse("expected non-empty list", influencers.isEmpty());
         assertTrue("expected list to contain username",
                 influencers.containsAll(Arrays.asList("c", "a", "b", "e")));
