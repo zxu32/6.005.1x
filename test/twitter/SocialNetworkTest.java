@@ -39,8 +39,8 @@ public class SocialNetworkTest {
         Map<String, Set<String>> followsGraph = SocialNetwork.guessFollowsGraph(tweets);
         Map<String, Set<String>> answer = new HashMap<>();
 
-        answer.put("Charles", new HashSet<>(Arrays.asList("andy", "lisa")));
-        answer.put("Owen", new HashSet<>(Arrays.asList("stephy", "fiora")));
+        answer.put("CHARLES", new HashSet<>(Arrays.asList("andy", "lisa")));
+        answer.put("OWEN", new HashSet<>(Arrays.asList("stephy", "fiora")));
 
         assertFalse("expected non-empty map", followsGraph.isEmpty());
         assertThat("check map equals answer", followsGraph, is(answer));
@@ -52,9 +52,9 @@ public class SocialNetworkTest {
         Map<String, Set<String>> followsGraph = SocialNetwork.guessFollowsGraph(tweets);
         Map<String, Set<String>> answer = new HashMap<>();
 
-        answer.put("Charles", new HashSet<>(Arrays.asList("andy", "lisa")));
-        answer.put("Owen", new HashSet<>(Arrays.asList("stephy", "fiora")));
-        answer.put("Jane", new HashSet<>(Arrays.asList("shelley", "stephy", "fiora")));
+        answer.put("CHARLES", new HashSet<>(Arrays.asList("andy", "lisa")));
+        answer.put("OWEN", new HashSet<>(Arrays.asList("stephy", "fiora")));
+        answer.put("JANE", new HashSet<>(Arrays.asList("shelley", "stephy", "fiora")));
 
         assertFalse("expected non-empty map", followsGraph.isEmpty());
         assertThat("check map equals answer", followsGraph, is(answer));

@@ -40,7 +40,7 @@ public class SocialNetwork {
         for (Tweet tweet: tweets) {
             //put tweet into a list because getMentionedUsers function takes list as param
             Set<String> followed = new HashSet<>(Extract.getMentionedUsers(Arrays.asList(tweet)));
-            followsGraph.put(tweet.getAuthor(), followed);
+            followsGraph.put(tweet.getAuthor().toUpperCase(), followed);
         }
         return followsGraph;
     }
